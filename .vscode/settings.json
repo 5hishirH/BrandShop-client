@@ -9,5 +9,6 @@
       },
       "editor.quickSuggestions": {
         "strings": true
-      }
+      },
+      "editor.minimap.enabled": false
 }
