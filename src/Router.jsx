@@ -4,11 +4,12 @@ import Home from "./Pages/Home";
 import AddProduct from "./Pages/AddProduct";
 import MyCart from "./Pages/MyCart";
 import Login from "./Pages/Login";
+import { AuthProvider } from "./AuthProvider";
 
 const Router = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout></MainLayout>,
+        element: <AuthProvider><MainLayout></MainLayout></AuthProvider>,
         children: [
             {
                 path: '/',
