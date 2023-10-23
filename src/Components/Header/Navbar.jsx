@@ -1,72 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { FiMenu } from "react-icons/fi";
+import { MdCloseFullscreen } from "react-icons/md";
 
 const Navbar = () => {
+  const links = [
+    { name: "Home", link: "/" },
+    { name: "Add Product", link: "/addProducts" },
+    { name: "My Cart", link: "/myCart" },
+  ];
+
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="bg-some_green px-6 text-royal_blue flex items-center justify-between shadow-xl">
-      <div className="flex gap-12 items-center">
-        <div className="flex items-center gap-4">
-          <img
-            src="https://i.ibb.co/XSNK3kw/icons8-fashion-64-1.png"
-            alt="Logo"
-            className="h-18 py-2"
-          />
-          <span className="text-2xl font-bold"><span className="text-[#edf5d1]">Trend</span>Trove</span>
+    <>
+      <div className="bg-some_green px-4 lg:px-6 py-1 lg:py-auto text-royal_blue flex items-center justify-between shadow-xl relative">
+        <div className="flex gap-12 items-center">
+          <div className="flex items-center gap-4">
+            <span
+              onClick={() => {
+                setOpen(!open);
+              }}
+              className="cursor-pointer block lg:hidden"
+            >
+              {open ? <MdCloseFullscreen /> : <FiMenu />}
+            </span>
+            <div className="flex items-center gap-2 lg:gap-4">
+              <img
+                src="https://i.ibb.co/XSNK3kw/icons8-fashion-64-1.png"
+                alt="Logo"
+                className="h-10 lg:h-16 py-2"
+              />
+              <span className="text-lg lg:text-2xl font-bold">
+                <span className="text-[#edf5d1]">Trend</span>Trove
+              </span>
+            </div>
+          </div>
+          <div
+            className={`text-lg font-medium ${open ? '' : 'hidden lg:flex'} flex flex-col lg:flex-row gap-4 absolute lg:relative top-11 left-0 lg:top-auto lg:left-auto pl-4 lg:pl-0 w-full lg:w-fit bg-some_green`}
+          >
+            {links.map(({ name, link }) => (
+              <NavLink
+                to={link}
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? "underline decoration-2 underline-offset-4"
+                    : ""
+                }
+              >
+                {name}
+              </NavLink>
+            ))}
+          </div>
         </div>
-        <div className="text-lg font-medium flex gap-4">
+        <div className="">
           <NavLink
-            to={"/"}
+            to={"/login"}
             className={({ isActive, isPending }) =>
               isPending
                 ? "pending"
                 : isActive
-                ? "underline decoration-2 underline-offset-4"
-                : ""
+                ? "border-2 border-royal_blue bg-royal_blue text-white px-4 py-2 font-bold rounded-md"
+                : "border-2 border-royal_blue px-4 py-2 font-bold rounded-md"
             }
           >
-            Home
-          </NavLink>
-          <NavLink
-            to={"/addProducts"}
-            className={({ isActive, isPending }) =>
-              isPending
-                ? "pending"
-                : isActive
-                ? "underline decoration-2 underline-offset-4"
-                : ""
-            }
-          >
-            Add Product
-          </NavLink>
-          <NavLink
-            to={"/myCart"}
-            className={({ isActive, isPending }) =>
-              isPending
-                ? "pending"
-                : isActive
-                ? "underline decoration-2 underline-offset-4"
-                : ""
-            }
-          >
-            My Cart
+            LOGIN
           </NavLink>
         </div>
       </div>
-      <div className="">
-        <NavLink
-          to={"/login"}
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "pending"
-              : isActive
-              ? "border-2 border-royal_blue bg-royal_blue text-white px-4 py-2 font-bold rounded-md"
-              : "border-2 border-royal_blue px-4 py-2 font-bold rounded-md"
-          }
-        >
-          LOGIN
-        </NavLink>
-      </div>
-    </div>
+
+      <div></div>
+    </>
   );
 };
 
