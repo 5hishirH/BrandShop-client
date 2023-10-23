@@ -1,31 +1,50 @@
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 import { useAuthContext } from "../AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Link } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   const notify = (message) => toast.error(message);
+  const { createUser, handleGoogleUser, auth, provider } =
+    useAuthContext();
 
-  const { signInUser, handleGoogleUser, auth, provider } = useAuthContext();
-
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
+
     const email = e.target.email.value; // from name attribute of input:email
     const password = e.target.password.value;
+    console.log(email, password);
 
-    //signin
-    signInUser(email, password)
+    if (password.length < 6) {
+      notify("Password must be of 6 characters atleast");
+      return;
+    } else if (/[A-Z]/.test(password)) {
+      notify("Must Contain atleast one capital letter");
+      return;
+    } else if (/[0-9]/.test(password)) {
+      notify("Must Contain atleast one number");
+      return;
+    }
+
+    createUser(email, password)
       .then((userCredential) => {
-        // Signed in
+        // Signed up
         const user = userCredential.user;
+
         // ...
-        
+        Swal.fire({
+          icon: "success",
+          title: "Thank You!",
+          text: "For creating an account!",
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        // ..
         notify(errorMessage);
       });
   };
@@ -40,23 +59,24 @@ const Login = () => {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        
+        Swal.fire({
+          icon: "success",
+          title: "Thank You!",
+          text: "For creating an account!",
+        });
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+        notify(errorMessage);
       });
   };
 
   return (
     <div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
         {/* email */}
         <div className="form-control w-full max-w-xs">
           <label className="label">
@@ -88,11 +108,11 @@ const Login = () => {
           className="input w-full max-w-xs cursor-pointer"
         />
       </form>
-      <Link to={'/register'}>Register</Link>
-      <button className="btn btn-neutral">Continue with Google</button>
+      <Link to={'/Login'}>Sign-in</Link>
+      <button onClick={handleSignInWithGoogle} className="btn btn-neutral">Continue with Google</button>
       <ToastContainer />
     </div>
   );
 };
 
-export default Login;
+export default Register;
