@@ -7,27 +7,45 @@ const OurBrands = () => {
   const [brandData, setBrandData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Function to fetch data from an API
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://brand-shop-server-cy04mmzkd-5hishirh.vercel.app/brands"
-        ); // Replace with your API URL
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const jsonData = await response.json();
-        setBrandData(jsonData);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://brand-shop-server-hazel-nine.vercel.app/brands"
+      ); // Replace with your API URL
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
 
-    fetchData(); // Call the fetchData function when the component mounts
+      const jsonData = await response.json();
+      setBrandData(jsonData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  };
+
+  //...
+  const keepFetchingData = async () => {
+    const fetchedData = await fetchData();
+
+    if (fetchedData !== null) {
+      // Check if the fetched data meets a specific condition
+      if (brandData?.brandName) {
+        setData(fetchedData);
+        setIsFetching(false);
+      } else {
+        // If the condition is not met, continue fetching data recursively
+        await keepFetchingData();
+      }
+    } else {
+      // Handle the case where fetching fails
+      setIsFetching(false);
+    }
+  };
+
+  useEffect(() => {
+    keepFetchingData();
   }, []);
 
   return (
