@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { MdCloseFullscreen } from "react-icons/md";
+import { useAuthContext } from "../../AuthProvider";
 
 const Navbar = () => {
   const links = [
@@ -11,6 +12,13 @@ const Navbar = () => {
   ];
 
   const [open, setOpen] = useState(false);
+  const { user, logOut } = useAuthContext();
+
+  const LogOutHandler = () => {
+    logOut()
+      .then(() => swal("Logout Successfull!", "", "success"))
+      .catch((error) => console.log.error(error));
+  };
 
   return (
     <>
@@ -37,7 +45,9 @@ const Navbar = () => {
             </div>
           </div>
           <div
-            className={`text-lg font-medium ${open ? '' : 'hidden lg:flex'} flex flex-col lg:flex-row gap-4 absolute lg:relative top-11 left-0 lg:top-auto lg:left-auto pl-4 lg:pl-0 w-full lg:w-fit bg-some_green`}
+            className={`text-lg font-medium ${
+              open ? "" : "hidden lg:flex"
+            } flex flex-col lg:flex-row gap-4 absolute lg:relative top-11 left-0 lg:top-auto lg:left-auto pl-4 lg:pl-0 w-full lg:w-fit bg-some_green`}
           >
             {links.map(({ name, link }) => (
               <NavLink
@@ -56,18 +66,36 @@ const Navbar = () => {
           </div>
         </div>
         <div className="">
-          <NavLink
-            to={"/login"}
-            className={({ isActive, isPending }) =>
-              isPending
-                ? "pending"
-                : isActive
-                ? "border-2 border-royal_blue bg-royal_blue text-white px-4 py-2 font-bold rounded-md"
-                : "border-2 border-royal_blue px-4 py-2 font-bold rounded-md"
-            }
-          >
-            LOGIN
-          </NavLink>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <button onClick={LogOutHandler} className="btn btn-sm btn-warning">
+                Logout
+              </button>
+              <span>{user.email.slice(0, user.email.indexOf("@"))}</span>
+              {user?.photoURL ? (
+                <div className="h-8 rounded-full overflow-hidden">
+                  <img src={user.photoURL} alt="" className="h-full" />
+                </div>
+              ) : (
+                <div className="h-8 rounded-full overflow-hidden">
+                  <img src="" alt="" className="h-full" />
+                </div>
+              )}
+            </div>
+          ) : (
+            <NavLink
+              to={"/login"}
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "border-2 border-royal_blue bg-royal_blue text-white px-4 py-2 font-bold rounded-md"
+                  : "border-2 border-royal_blue px-4 py-2 font-bold rounded-md"
+              }
+            >
+              LOGIN
+            </NavLink>
+          )}
         </div>
       </div>
 
