@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const BrandDetails = () => {
   const brandData = useLoaderData();
@@ -58,9 +58,11 @@ const BrandDetails = () => {
 
       {/* products */}
       <div className="grid grid-cols-2 gap-8">
-        {brandProds[0]?.brand_name ? (
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
           brandProds?.map(
-            ({ name, brand_name, type, info, rating, img, price }) => (
+            ({ _id, name, brand_name, type, info, rating, img, price }) => (
               <div>
                 <div>
                   <img src={img} alt="" />
@@ -75,15 +77,15 @@ const BrandDetails = () => {
                     <p>{info}</p>
                   </div>
                   <div>
-                    <button className="btn btn-neutral">Details</button>
+                    <Link to={`/products/${_id}`} className="btn btn-neutral">
+                      Details
+                    </Link>
                     <button className="btn btn-neutral">Update</button>
                   </div>
                 </div>
               </div>
             )
           )
-        ) : (
-          <p>Loading...</p>
         )}
       </div>
     </div>

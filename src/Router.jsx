@@ -7,6 +7,7 @@ import Login from "./Pages/Login";
 import { AuthProvider } from "./AuthProvider";
 import Register from "./Pages/Register";
 import BrandDetails from "./Pages/BrandDetails";
+import ProdDetails from "./Pages/ProdDetails";
 
 const Router = createBrowserRouter([
     {
@@ -38,6 +39,11 @@ const Router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login></Login>
+            },
+            {
+                path: '/products/:id',
+                element: <ProdDetails></ProdDetails>,
+                loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
             }
         ]
     }
