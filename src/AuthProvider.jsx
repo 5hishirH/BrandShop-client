@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -47,6 +48,8 @@ export const AuthProvider = ({ children }) => {
     auth,
     provider,
     logOut,
+    darkMode,
+    setDarkMode
   }
 
   useEffect(() => {

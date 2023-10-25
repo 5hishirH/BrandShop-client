@@ -12,12 +12,17 @@ const Navbar = () => {
   ];
 
   const [open, setOpen] = useState(false);
-  const { user, logOut } = useAuthContext();
+  const { user, logOut, setDarkMode } = useAuthContext();
 
   const LogOutHandler = () => {
     logOut()
       .then(() => swal("Logout Successfull!", "", "success"))
       .catch((error) => console.log.error(error));
+  };
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
 
   return (
@@ -68,7 +73,10 @@ const Navbar = () => {
         <div className="">
           {user ? (
             <div className="flex items-center gap-4">
-              <button onClick={LogOutHandler} className="btn btn-sm btn-warning">
+              <button
+                onClick={LogOutHandler}
+                className="btn btn-sm btn-warning"
+              >
                 Logout
               </button>
               <span>{user.email.slice(0, user.email.indexOf("@"))}</span>

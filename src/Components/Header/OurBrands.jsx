@@ -53,16 +53,16 @@ const OurBrands = () => {
       {loading ? (
         <p>Loading....</p>
       ) : (
-        <div>
-          <h2>OurBrands</h2>
-          <div className="grid grid-cols-3 gap-8">
+        <div className="mt-28">
+          <h2 className="text-4xl text-center font-semibold">Our Brands</h2>
+          <div className="mt-10 grid grid-cols-3 gap-8">
             {brandData?.map((e) => (
-              <Link to={`/brands/${e._id}`}>
+              <Link to={`/brands/${e._id}`} className="">
                 <div className="cursor-pointer">
-                  <div className="h-48 overflow-hidden">
-                    <img src={e.img} alt="" />
+                  <div className="h-64 overflow-hidden rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+                    <img src={e.img} alt="" className="w-full h-full object-cover"/>
                   </div>
-                  <p>{e.brandName}</p>
+                  <p className="text-center text-xl font-medium mt-4">{e.brandName}</p>
                 </div>
               </Link>
             ))}
