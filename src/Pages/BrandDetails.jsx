@@ -69,7 +69,7 @@ const BrandDetails = () => {
             <div className="grid grid-cols-2 gap-8">
               {brandProds?.map(
                 ({ _id, name, brand_name, type, info, rating, img, price }) => (
-                  <div className="h-72 shadow-[0_3px_10px_rgb(0,0,0,0.2)] flex justify-between p-6 rounded-xl">
+                  <div className="h-80 shadow-[0_3px_10px_rgb(0,0,0,0.2)] flex justify-between p-6 rounded-xl">
                     <div className="h-full w-[40%] overflow-hidden rounded-xl">
                       <img
                         src={img}
@@ -84,7 +84,7 @@ const BrandDetails = () => {
                         <p>Product Type : {type}</p>
                         <p>Price : {price}$</p>
                         <p>Rating : {rating}/5</p>
-                        <p>{info.slice(0, 90)}.....</p>
+                        <p>{info.slice(0, 70)}.....</p>
                       </div>
                       <div className="mt-4 flex gap-4">
                         <Link
@@ -108,7 +108,7 @@ const BrandDetails = () => {
           </div>
         ) : (
           <div>
-            <p>Products are not available</p>
+            <p className="-mt-6 text-3xl font-bold">Products will be added soon</p>
           </div>
         )}
       </div>

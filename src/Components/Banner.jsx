@@ -6,7 +6,7 @@ const Banner = () => {
       <div className="text-5xl text-center leading-relaxed font-semibold">
         <span className="text-some_green">Discover Your Style, Embrace Comfort, and Elevate Your Confidence with</span>
         <br />
-        <span className="text-white">
+        <span className="text-white" id="banner">
           Our Fashionable Products & Apparel Collection!
         </span>
       </div>

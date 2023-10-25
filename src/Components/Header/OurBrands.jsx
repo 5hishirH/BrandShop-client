@@ -51,7 +51,7 @@ const OurBrands = () => {
   return (
     <div className="w-11/12 mx-auto">
       {loading ? (
-        <p>Loading....</p>
+        <p className="mt-4 text-2xl">Loading....</p>
       ) : (
         <div className="mt-28">
           <h2 className="text-4xl text-center font-semibold">Our Brands</h2>

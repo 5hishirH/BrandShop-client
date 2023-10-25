@@ -10,11 +10,13 @@ import BrandDetails from "./Pages/BrandDetails";
 import ProdDetails from "./Pages/ProdDetails";
 import UpdateProd from "./Pages/UpdateProd";
 import PrivateRoute from "./Pages/PrivateRoute";
+import ErrorPage from "./Pages/ErrorPage";
 
 const Router = createBrowserRouter([
     {
         path: '/',
         element: <AuthProvider><MainLayout></MainLayout></AuthProvider>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',

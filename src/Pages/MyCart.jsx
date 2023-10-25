@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../AuthProvider";
 
 const MyCart = () => {
   const [productData, setProductData] = useState([]);
+  const { user } = useAuthContext();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,25 +52,25 @@ const MyCart = () => {
       });
   }, []);
 
-  const prods0 = cartData?.map(({ prod_id }) =>
+  const userCart = cartData?.filter((e) => e.userEmail === user.email);
+
+  const prods0 = userCart?.map(({ prod_id }) =>
     productData?.find((e) => e._id === prod_id)
   );
 
   console.log("prods0", prods0);
 
-  const prods = prods0?.filter( e => e !== undefined);
-  console.log(prods)
+  const prods = prods0?.filter((e) => e !== undefined);
+  console.log(prods);
 
   return (
     <div className="mt-24 mx-auto w-11/12">
       {!prods ? (
         <p>Loading...</p>
       ) : (
-        prods?.map((e) => (
+        <div>
+          <h2 className="text-4xl font-semibold mb-8">My cart</h2>
           <div className="">
-            <h2 className="text-4xl font-semibold mb-8">
-              My cart
-            </h2>
             <div className="grid grid-cols-2 gap-8">
               {prods?.map((e) => (
                 <div className="h-72 shadow-[0_3px_10px_rgb(0,0,0,0.2)] flex justify-between p-6 rounded-xl">
@@ -93,7 +95,7 @@ const MyCart = () => {
               ))}
             </div>
           </div>
-        ))
+        </div>
       )}
     </div>
   );

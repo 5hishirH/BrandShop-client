@@ -4,8 +4,7 @@ import Swal from "sweetalert2";
 
 const UpdateProd = () => {
   const product = useLoaderData();
-  const { _id, name, brand_name, type, info, rating, img, price } =
-    product;
+  const { _id, name, brand_name, type, info, rating, img, price } = product;
 
   const handleUpdateProduct = (e) => {
     e.preventDefault();
@@ -32,16 +31,13 @@ const UpdateProd = () => {
     console.log(updatedProd);
 
     // send data to the server
-    fetch(
-      `https://brand-shop-server-hazel-nine.vercel.app/products/${_id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(updatedProd),
-      }
-    )
+    fetch(`https://brand-shop-server-hazel-nine.vercel.app/products/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updatedProd),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -56,65 +52,100 @@ const UpdateProd = () => {
       });
   };
   return (
-    <div className="w-fit mx-auto">
-      <h2 className="text-2xl text-center">Update Product</h2>
-      <form onSubmit={handleUpdateProduct} className="flex flex-col gap-8">
-        <input
-          name="image"
-          type="url"
-          defaultValue={img}
-          className="input input-bordered w-full max-w-xs"
-          required
-        />
-        <input
-          name="prodName"
-          type="text"
-          defaultValue={name}
-          className="input input-bordered w-full max-w-xs"
-          required
-        />
-        <input
-          name="brandName"
-          type="text"
-          defaultValue={brand_name}
-          className="input input-bordered w-full max-w-xs"
-          required
-        />
-        <input
-          name="prodType"
-          type="text"
-          defaultValue={type}
-          className="input input-bordered w-full max-w-xs"
-          required
-        />
-        <input
-          name="prodPrice"
-          type="number"
-          defaultValue={price}
-          className="input input-bordered w-full max-w-xs"
-          min="0"
-          required
-        />
-        <input
-          name="prodInfo"
-          type="text"
-          defaultValue={info}
-          className="input input-bordered w-full max-w-xs"
-          required
-        />
-        <input
-          name="rating"
-          type="number"
-          defaultValue={rating}
-          className="input input-bordered w-full max-w-xs"
-          min="0"
-          max="5"
-          required
-        />
+    <div className="my-10 w-1/4 mx-auto">
+      <h2 className="text-4xl font-bold text-center">Update Product</h2>
+      <form onSubmit={handleUpdateProduct} className="mt-8 flex flex-col gap-4">
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Product Image</span>
+          </label>
+          <input
+            name="image"
+            type="url"
+            defaultValue={img}
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Product Name</span>
+          </label>
+          <input
+            name="prodName"
+            type="text"
+            defaultValue={name}
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Brand Name</span>
+          </label>
+          <input
+            name="brandName"
+            type="text"
+            defaultValue={brand_name}
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Product Type</span>
+          </label>
+          <input
+            name="prodType"
+            type="text"
+            defaultValue={type}
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Product Price</span>
+          </label>
+          <input
+            name="prodPrice"
+            type="number"
+            defaultValue={price}
+            className="input input-bordered w-full"
+            min="0"
+            required
+          />
+        </div>
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Password</span>
+          </label>
+          <input
+            name="prodInfo"
+            type="text"
+            defaultValue={info}
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Password</span>
+          </label>
+          <input
+            name="rating"
+            type="number"
+            defaultValue={rating}
+            className="input input-bordered w-full"
+            min="0"
+            max="5"
+            required
+          />
+        </div>
         <input
           type="submit"
-          value="Add"
-          className="btn btn-neutral cursor-pointer"
+          value="Update"
+          className="mt-2 btn btn-neutral cursor-pointer"
         />
       </form>
     </div>

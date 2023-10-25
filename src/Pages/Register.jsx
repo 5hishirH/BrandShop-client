@@ -60,8 +60,7 @@ const Register = () => {
         // ...
         Swal.fire({
           icon: "success",
-          title: "Thank You!",
-          text: "For creating an account!",
+          title: "Login Succesfull!"
         });
       })
       .catch((error) => {
@@ -74,43 +73,51 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleRegister}>
-        {/* email */}
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">Email</span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your email here"
-            className="input input-bordered w-full max-w-xs"
-          />
-        </div>
+    <div className="w-11/12 mx-auto mt-20">
+        <h2 className="text-4xl text-center">Please Register</h2>
+      <div className="mt-8 w-full flex justify-center">
+        <div className="flex flex-col gap-6">
+          <form onSubmit={handleRegister} className="">
+            {/* email */}
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email here"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </div>
 
-        {/* password */}
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter your password here"
-            className="input input-bordered w-full max-w-xs"
-          />
+            {/* password */}
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your password here"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <input
+              type="submit"
+              value="Register"
+              className="mt-4 input btn btn-success w-full max-w-xs cursor-pointer"
+            />
+          </form>
+          <div className="flex gap-4 w-full">
+            <span>Already have an account?</span>
+            <Link to={"/login"}>Login</Link>
+          </div>
+          <button onClick={handleSignInWithGoogle} className="w-full btn btn-neutral">
+            Continue with Google
+          </button>
         </div>
-        <input
-          type="submit"
-          value="Login"
-          className="input w-full max-w-xs cursor-pointer"
-        />
-      </form>
-      <Link to={"/Login"}>Sign-in</Link>
-      <button onClick={handleSignInWithGoogle} className="btn btn-neutral">
-        Continue with Google
-      </button>
+      </div>
       <ToastContainer />
     </div>
   );
