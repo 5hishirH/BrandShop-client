@@ -7,7 +7,7 @@ const Banner = () => {
         <span className="text-some_green">Discover Your Style, Embrace Comfort, and Elevate Your Confidence with</span>
         <br />
         <span className="text-white">
-          Our Fashionable Bodywear & Apparel Collection!
+          Our Fashionable Products & Apparel Collection!
         </span>
       </div>
     </div>
