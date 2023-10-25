@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuthContext } from "../AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,6 +12,8 @@ const Login = () => {
   const navigation = useNavigate();
 
   const { signInUser, handleGoogleUser, auth, provider } = useAuthContext();
+
+  const [showPass, setShowPass] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -25,7 +28,7 @@ const Login = () => {
         // ...
         Swal.fire({
           icon: "success",
-          title: "Login Succesfull!"
+          title: "Login Succesfull!",
         });
       })
       .catch((error) => {
@@ -45,10 +48,10 @@ const Login = () => {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        navigation('/');
+        navigation("/");
         Swal.fire({
           icon: "success",
-          title: "Login Succesfull!"
+          title: "Login Succesfull!",
         });
       })
       .catch((error) => {
@@ -65,7 +68,7 @@ const Login = () => {
 
   return (
     <div className="w-11/12 mx-auto mt-20">
-        <h2 className="text-4xl text-center">Please Login</h2>
+      <h2 className="text-4xl text-center">Please Login</h2>
       <div className="mt-8 w-full flex justify-center">
         <div className="flex flex-col gap-6">
           <form onSubmit={handleLogin} className="">
@@ -87,12 +90,22 @@ const Login = () => {
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Enter your password here"
-                className="input input-bordered w-full max-w-xs"
-              />
+              <div className="flex items-center">
+                <input
+                  type={showPass ? 'text' : 'password'}
+                  name="password"
+                  placeholder="Enter your password here"
+                  className="input input-bordered w-full max-w-xs"
+                />
+                <span
+                  onClick={() => {
+                    setShowPass(!showPass);
+                  }}
+                  className="cursor-pointer -ml-7"
+                >
+                  {showPass ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
             </div>
             <input
               type="submit"
@@ -104,7 +117,10 @@ const Login = () => {
             <span>Don't have an account?</span>
             <Link to={"/register"}>Register</Link>
           </div>
-          <button onClick={handleSignInWithGoogle} className="w-full btn btn-neutral">
+          <button
+            onClick={handleSignInWithGoogle}
+            className="w-full btn btn-neutral"
+          >
             Continue with Google
           </button>
         </div>

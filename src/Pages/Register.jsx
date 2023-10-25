@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,6 +10,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 const Register = () => {
   const notify = (message) => toast.error(message);
   const { createUser, handleGoogleUser, auth, provider } = useAuthContext();
+  const [showPass, setShowPass] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -60,7 +62,7 @@ const Register = () => {
         // ...
         Swal.fire({
           icon: "success",
-          title: "Login Succesfull!"
+          title: "Login Succesfull!",
         });
       })
       .catch((error) => {
@@ -74,7 +76,7 @@ const Register = () => {
 
   return (
     <div className="w-11/12 mx-auto mt-20">
-        <h2 className="text-4xl text-center">Please Register</h2>
+      <h2 className="text-4xl text-center">Please Register</h2>
       <div className="mt-8 w-full flex justify-center">
         <div className="flex flex-col gap-6">
           <form onSubmit={handleRegister} className="">
@@ -96,12 +98,22 @@ const Register = () => {
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Enter your password here"
-                className="input input-bordered w-full max-w-xs"
-              />
+              <div className="flex items-center">
+                <input
+                  type={showPass ? "text" : "password"}
+                  name="password"
+                  placeholder="Enter your password here"
+                  className="input input-bordered w-full max-w-xs"
+                />
+                <span
+                  onClick={() => {
+                    setShowPass(!showPass);
+                  }}
+                  className="cursor-pointer -ml-7"
+                >
+                  {showPass ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
             </div>
             <input
               type="submit"
@@ -113,7 +125,10 @@ const Register = () => {
             <span>Already have an account?</span>
             <Link to={"/login"}>Login</Link>
           </div>
-          <button onClick={handleSignInWithGoogle} className="w-full btn btn-neutral">
+          <button
+            onClick={handleSignInWithGoogle}
+            className="w-full btn btn-neutral"
+          >
             Continue with Google
           </button>
         </div>
