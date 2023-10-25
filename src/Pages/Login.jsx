@@ -89,7 +89,7 @@ const Login = () => {
         />
       </form>
       <Link to={'/register'}>Register</Link>
-      <button className="btn btn-neutral">Continue with Google</button>
+      <button onClick={handleSignInWithGoogle} className="btn btn-neutral">Continue with Google</button>
       <ToastContainer />
     </div>
   );

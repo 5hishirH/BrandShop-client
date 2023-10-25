@@ -1,8 +1,13 @@
 import React from "react";
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const AddProduct = () => {
-  const handleAddProduct = (e) => {
+const UpdateProd = () => {
+  const product = useLoaderData();
+  const { _id, name, brand_name, type, info, rating, img, price } =
+    product;
+
+  const handleUpdateProduct = (e) => {
     e.preventDefault();
     const j = e.target;
 
@@ -14,7 +19,7 @@ const AddProduct = () => {
     const rating = j.rating.value;
     const img = j.image.value;
 
-    const newProd = {
+    const updatedProd = {
       name,
       brand_name,
       type,
@@ -23,79 +28,84 @@ const AddProduct = () => {
       rating,
       img,
     };
-    console.log(newProd);
-    // send data to server
-    fetch("https://brand-shop-server-hazel-nine.vercel.app/products", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(newProd),
-    })
+
+    console.log(updatedProd);
+
+    // send data to the server
+    fetch(
+      `https://brand-shop-server-hazel-nine.vercel.app/products/${_id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(updatedProd),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.insertedId) {
+        if (data.modifiedCount > 0) {
           Swal.fire({
             title: "Success!",
-            text: "Product Added Successfully",
+            text: "Product Updated Successfully",
             icon: "success",
-            confirmButtonText: "Cool",
+            confirmButtonText: "Ok",
           });
         }
       });
   };
-
   return (
     <div className="w-fit mx-auto">
-      <form onSubmit={handleAddProduct} className="flex flex-col gap-8">
+      <h2 className="text-2xl text-center">Update Product</h2>
+      <form onSubmit={handleUpdateProduct} className="flex flex-col gap-8">
         <input
           name="image"
           type="url"
-          placeholder="Paste the image url here"
+          defaultValue={img}
           className="input input-bordered w-full max-w-xs"
           required
         />
         <input
           name="prodName"
           type="text"
-          placeholder="Product Name"
+          defaultValue={name}
           className="input input-bordered w-full max-w-xs"
           required
         />
         <input
           name="brandName"
           type="text"
-          placeholder="Brand name"
+          defaultValue={brand_name}
           className="input input-bordered w-full max-w-xs"
           required
         />
         <input
           name="prodType"
           type="text"
-          placeholder="Product Types"
+          defaultValue={type}
           className="input input-bordered w-full max-w-xs"
           required
         />
         <input
           name="prodPrice"
           type="number"
-          placeholder="Price"
+          defaultValue={price}
           className="input input-bordered w-full max-w-xs"
-          min='0'
+          min="0"
           required
         />
         <input
           name="prodInfo"
           type="text"
-          placeholder="About the product"
+          defaultValue={info}
           className="input input-bordered w-full max-w-xs"
           required
         />
         <input
           name="rating"
           type="number"
-          placeholder="Rating"
+          defaultValue={rating}
           className="input input-bordered w-full max-w-xs"
           min="0"
           max="5"
@@ -111,4 +121,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default UpdateProd;

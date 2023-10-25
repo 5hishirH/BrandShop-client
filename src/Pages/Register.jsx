@@ -8,8 +8,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 
 const Register = () => {
   const notify = (message) => toast.error(message);
-  const { createUser, handleGoogleUser, auth, provider } =
-    useAuthContext();
+  const { createUser, handleGoogleUser, auth, provider } = useAuthContext();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -21,11 +20,11 @@ const Register = () => {
     if (password.length < 6) {
       notify("Password must be of 6 characters atleast");
       return;
-    } else if (/[A-Z]/.test(password)) {
+    } else if (!/[A-Z]/.test(password)) {
       notify("Must Contain atleast one capital letter");
       return;
-    } else if (/[0-9]/.test(password)) {
-      notify("Must Contain atleast one number");
+    } else if (!/[\W_]/.test(password)) {
+      notify("Must Contain atleast one special character");
       return;
     }
 
@@ -108,8 +107,10 @@ const Register = () => {
           className="input w-full max-w-xs cursor-pointer"
         />
       </form>
-      <Link to={'/Login'}>Sign-in</Link>
-      <button onClick={handleSignInWithGoogle} className="btn btn-neutral">Continue with Google</button>
+      <Link to={"/Login"}>Sign-in</Link>
+      <button onClick={handleSignInWithGoogle} className="btn btn-neutral">
+        Continue with Google
+      </button>
       <ToastContainer />
     </div>
   );

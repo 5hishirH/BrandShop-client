@@ -8,6 +8,8 @@ import { AuthProvider } from "./AuthProvider";
 import Register from "./Pages/Register";
 import BrandDetails from "./Pages/BrandDetails";
 import ProdDetails from "./Pages/ProdDetails";
+import UpdateProd from "./Pages/UpdateProd";
+import PrivateRoute from "./Pages/PrivateRoute";
 
 const Router = createBrowserRouter([
     {
@@ -26,11 +28,11 @@ const Router = createBrowserRouter([
             },
             {
                 path: '/addProducts',
-                element: <AddProduct></AddProduct>
+                element: <PrivateRoute><AddProduct></AddProduct></PrivateRoute>
             },
             {
                 path: '/myCart',
-                element: <MyCart></MyCart>
+                element: <PrivateRoute><MyCart></MyCart></PrivateRoute>
             },
             {
                 path: '/register',
@@ -42,8 +44,13 @@ const Router = createBrowserRouter([
             },
             {
                 path: '/products/:id',
-                element: <ProdDetails></ProdDetails>,
-                loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
+                element: <PrivateRoute><ProdDetails></ProdDetails></PrivateRoute>,
+                loader: ({params}) => fetch(`https://brand-shop-server-hazel-nine.vercel.app/products/${params.id}`)
+            },
+            {
+                path: '/updateProduct/:id',
+                element: <PrivateRoute><UpdateProd></UpdateProd></PrivateRoute>,
+                loader: ({params}) => fetch(`https://brand-shop-server-hazel-nine.vercel.app/products/${params.id}`)
             }
         ]
     }

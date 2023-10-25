@@ -72,7 +72,7 @@ const Navbar = () => {
                 Logout
               </button>
               <span>{user.email.slice(0, user.email.indexOf("@"))}</span>
-              {user?.photoURL ? (
+              {user.photoURL ? (
                 <div className="h-8 rounded-full overflow-hidden">
                   <img src={user.photoURL} alt="" className="h-full" />
                 </div>

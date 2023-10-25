@@ -12,7 +12,7 @@ const BrandDetails = () => {
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    fetch("http://localhost:5000/products")
+    fetch("https://brand-shop-server-hazel-nine.vercel.app/products")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -61,6 +61,7 @@ const BrandDetails = () => {
         {loading ? (
           <p>Loading...</p>
         ) : (
+          brandProds.length > 0 ?
           brandProds?.map(
             ({ _id, name, brand_name, type, info, rating, img, price }) => (
               <div>
@@ -80,12 +81,21 @@ const BrandDetails = () => {
                     <Link to={`/products/${_id}`} className="btn btn-neutral">
                       Details
                     </Link>
-                    <button className="btn btn-neutral">Update</button>
+                    <Link
+                      to={`/updateProduct/${_id}`}
+                      className="btn btn-neutral"
+                    >
+                      Update
+                    </Link>
                   </div>
                 </div>
               </div>
             )
           )
+          :
+          <div>
+            <p>Products are not available</p>
+          </div>
         )}
       </div>
     </div>
