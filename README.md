@@ -1,6 +1,6 @@
 ### 🌿 Live link
 
-live-link : https://fashion-and-apparel-31c61.firebaseapp.com/
+https://fashion-and-apparel-31c61.firebaseapp.com/
 
 ### ⚙️ Technologies used
 
